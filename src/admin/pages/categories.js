@@ -225,8 +225,6 @@ function setupEventListeners() {
                 e.preventDefault();
                 e.stopPropagation();
 
-                console.log('Delete requested for:', deleteBtn.dataset.id);
-
                 const confirmed = await ConfirmationModal.show({
                     title: 'Delete Category',
                     message: 'Are you sure you want to delete this category?',

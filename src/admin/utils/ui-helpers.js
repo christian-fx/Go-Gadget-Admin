@@ -36,6 +36,8 @@ import { AdminNotificationStore } from '../store/admin-notification-store.js';
 import { AdminOrderStore } from '../store/admin-order-store.js';
 import { AdminProductStore } from '../store/admin-product-store.js';
 import { AdminUserStore } from '../store/admin-user-store.js';
+import { auth } from '../../api/firebase-config.js';
+import { signOut } from 'firebase/auth';
 
 export async function updateGlobalUI() {
     // Ensure settings are loaded before updating UI
@@ -60,7 +62,18 @@ export async function updateGlobalUI() {
         userNameEl.textContent = `${settings.firstName} ${settings.lastName}`;
     }
 
-    // Role is usually static for now
+    // Wire up logout button
+    const logoutBtn = document.getElementById('logoutBtn');
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                window.location.hash = 'login';
+            } catch (err) {
+                console.error('Logout failed:', err);
+            }
+        });
+    }
 }
 
 export function initNotificationLogic() {

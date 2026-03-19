@@ -1,0 +1,37 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    function isAdmin() {
+      return request.auth != null && request.auth.token.role == 'admin';
+    }
+
+    // Users can read/write their OWN user document (needed for Google login profile creation)
+    match /users/{userId} {
+      allow read: if true;
+      allow create, update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if isAdmin();
+    }
+
+    // Customers can read their own customer data; admins manage everything
+    match /customers/{userId} {
+      allow read: if request.auth != null && request.auth.uid == userId || isAdmin();
+      allow create, update: if request.auth != null && request.auth.uid == userId;
+      allow delete: if isAdmin();
+    }
+
+    // Orders: customers can create + read their own; admins manage all
+    match /orders/{orderId} {
+      allow read: if request.auth != null && request.auth.uid == resource.data.userId || isAdmin();
+      allow create: if request.auth != null;
+      allow update, delete: if isAdmin();
+    }
+
+    // Everything else: public reads, admin-only writes
+    match /{document=**} {
+      allow read: if true;
+      allow write, delete: if isAdmin();
+    }
+  }
+}

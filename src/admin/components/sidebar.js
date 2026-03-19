@@ -50,7 +50,7 @@ export function Sidebar(activePage) {
 
             <!-- Footer -->
             <div class="p-4 border-t border-[#1e293b] bg-[#0f172a]">
-                <button class="flex items-center w-full px-3 py-2.5 rounded-lg text-rose-500 hover:bg-[#1e293b] hover:text-rose-400 transition-colors group">
+                <button id="logoutBtn" class="flex items-center w-full px-3 py-2.5 rounded-lg text-rose-500 hover:bg-[#1e293b] hover:text-rose-400 transition-colors group">
                      <span class="material-symbols-outlined mr-3 text-[22px] group-hover:text-rose-400">logout</span>
                      <span class="text-sm font-medium">Logout</span>
                 </button>

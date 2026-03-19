@@ -10,6 +10,11 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     emptyOutDir: true,
+    // Strip all console.* calls in production builds
+    minify: 'esbuild',
+    esbuildOptions: {
+      drop: ['console', 'debugger'],
+    },
     rollupOptions: {
       input: {
         main: resolve(process.cwd(), 'index.html'),

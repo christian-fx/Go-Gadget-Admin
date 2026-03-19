@@ -3,4 +3,7 @@ node_modules/
 dist/
 build/
 .DS_Store
-
+serviceAccountKey.json
+set-admin.mjs
+firebase-debug.log
+.firebase/
